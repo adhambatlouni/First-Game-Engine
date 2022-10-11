@@ -23,7 +23,6 @@
 
     // Drawing the objects on the screen 
     draw() {
-
         // set a color
         this.ctx.fillStyle = "#0000FF"; 
         // draws the blue board
@@ -58,20 +57,21 @@ class Object {
 }
 
 // Class for creating the ball
- class Ball extends Object {
+class Ball extends Object{
 
     //Constructor for the ball
-    constructor(canvas) {
+    constructor(canvas){
         super();
         
-        // default position of ball
-        this.x = 0; 
+        //default position of ball
+        this.x = canvas.width / 2; 
         this.y = canvas.height / 2;
 
-        this.radius = 10; // radius of ball
+        this.radius = 7; //radius of ball
 
-        // the speed of the ball
-        this.speed = 200;
+        //the speed of the ball on the x and y axis
+        this.velocityX = 200;
+        this.velocityY = 200;
 
         this.color = '#fff'; // color is white
     }
@@ -79,12 +79,18 @@ class Object {
     //update of movment 
     update(canvas, delta) {
         // move the ball
-        this.x += this.speed * delta;
+        this.x += this.velocityX * delta;
+        this.y += this.velocityY * delta;
 
-        if(this.x > canvas.width) {
-            this.x = 0;
-            this.speed = 200;
+        // check if ball hits top or bottom wall
+        if (this.y + this.radius >= canvas.height || this.y - this.radius <= 0) {
+            this.velocityY = -this.velocityY;
         }
+        
+        // check if ball hits on left or right wall
+        if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+            this.velocityX = -this.velocityX;
+        } 
     }
 
     // draw the ball
