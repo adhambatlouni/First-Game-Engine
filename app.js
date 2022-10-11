@@ -74,6 +74,8 @@ class Ball extends Object{
         this.velocityY = 200;
 
         this.color = '#fff'; // color is white
+
+        this.hit= new Audio("sounds/hit.mp3"); // sound effect
     }
     
     //update of movment 
@@ -85,11 +87,13 @@ class Ball extends Object{
         // check if ball hits top or bottom wall
         if (this.y + this.radius >= canvas.height || this.y - this.radius <= 0) {
             this.velocityY = -this.velocityY;
+            this.hit.play();
         }
         
         // check if ball hits on left or right wall
         if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
             this.velocityX = -this.velocityX;
+            this.hit.play();
         } 
     }
 
